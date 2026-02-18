@@ -6,13 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.demo.model.User;
-import com.example.demo.repositary.UserRepositary;
+import com.example.demo.repository.UserRepository;
 
 @Configuration
 public class DataIntializer {
 	@Bean
 	
-	CommandLineRunner loadSampleData (UserRepositary userRepository ,PasswordEncoder passwordEncoder) {
+	CommandLineRunner loadSampleData (UserRepository userRepository ,PasswordEncoder passwordEncoder) {
 		
 		return args -> {
 			if( !userRepository.existsByUsername("Admin")) {
