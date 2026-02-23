@@ -2,73 +2,25 @@
 <!DOCTYPE html>
 
 <html lang= "en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{fragments/layout :: head}"></head>
 	
-<head th:replace="~{fragments/layout :: head}"></head>
-
 <body>
+	
+	<div class ="d-flex" id="wrapper">
+<div th:replace="~{fragments/layout :: sidebar}"></div>
 
-    <div class="d-flex" id="wrapper">
-        <!-- Sidebar -->
-        <div class="bg-dark text-white" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom border-secondary">
-                <i class="bi bi-mortarboard-fill me-2"></i> SMS Admin
-            </div>
-            <div class="list-group list-group-flush">
-                <a href="dashboard.html" class="sidebar-link active">
-                    <i class="bi bi-speedometer2"></i> Dashboard
-                </a>
-                <a href="courses.html" class="sidebar-link">
-                    <i class="bi bi-book"></i> Courses
-                </a>
-                <a href="students.html" class="sidebar-link">
-                    <i class="bi bi-people"></i> Students
-                </a>
-                <a href="enroll-course.html" class="sidebar-link">
-                    <i class="bi bi-check2-square"></i> Enroll to Course
-                </a>
-                <a href="login.html" class="sidebar-link mt-auto border-top border-secondary">
-                    <i class="bi bi-box-arrow-right"></i> Logout
-                </a>
-            </div>
-        </div>
+       <!-- Page Content -->
+       <div id="page-content-wrapper">
+		<div th:replace="~{fragments/layout :: navbar}"></div>
+		
+		<!--main content-->
+		<div class="container-fluid px-4 py-4">
+			<h2 class="mb-4">Dashboard</h2>
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <!-- Top Navigation -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <div class="container-fluid">
-                    <button class="btn btn-outline-secondary" id="sidebarToggle">
-                        <i class="bi bi-list"></i>
-                    </button>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="bi bi-person-circle me-1"></i> Admin User
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Profile</a>
-                                    <a class="dropdown-item" href="#">Settings</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="login.html">Logout</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-            <!-- Main Content -->
-            <div class="container-fluid px-4 py-4">
-                <h2 class="mb-4">Dashboard</h2>
+    
+          
 
                 <!-- Stats Cards -->
                 <div class="row g-4 mb-4">

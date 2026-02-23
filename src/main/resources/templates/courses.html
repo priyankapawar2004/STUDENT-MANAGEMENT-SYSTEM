@@ -3,43 +3,24 @@
 <html lang="en">
 
 
-<body><html lang= "en" xmlns:th="http://www.thymeleaf.org">
+<html lang= "en" xmlns:th="http://www.thymeleaf.org">
 	
 <head th:replace="~{fragments/layout :: head}"></head>
 
+<body>
+    <div class ="d-flex" id="wrapper">
+		<!--sidebar-->
     <div th:replace="~{fragments/layout :: sidebar}"></div>
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-			
 			<div th:replace="~{fragments/layout :: navbar}"></div>
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <div class="container-fluid">
-                    <button class="btn btn-outline-secondary" id="sidebarToggle"><i class="bi bi-list"></i></button>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"><span class="navbar-toggler-icon"></span></button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown"><i class="bi bi-person-circle me-1"></i> Admin User</a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Profile</a>
-                                    <a class="dropdown-item" href="#">Settings</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="login.html">Logout</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
+         
             <div class="container-fluid px-4 py-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Courses</h2>
-                    <a href="add-course.html" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Add New
+                    <a th:href="@{/course/new}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Add New
                         Course</a>
                 </div>
 

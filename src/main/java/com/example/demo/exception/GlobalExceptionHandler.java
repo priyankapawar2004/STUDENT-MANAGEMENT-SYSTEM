@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
 	 @ExceptionHandler(Exception.class)
 	 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public String genericExceptionHandler(Exception ex) {
-		 Log.error("CSRF validation failed" , ex.getMessage());
+		 Log.error("something get wrong" , ex);
 		return "500";
 	}
 
