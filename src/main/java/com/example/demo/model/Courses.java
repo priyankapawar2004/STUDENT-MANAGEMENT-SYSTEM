@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -37,6 +38,11 @@ public class Courses {
 	
 	@Column (nullable = false , updatable = false)
 	private LocalDateTime createdAt;
+	
+	@PrePersist
+	public void onCreate() {
+		createdAt = LocalDateTime.now();
+	}
 
 	public Long getId() {
 		return id;

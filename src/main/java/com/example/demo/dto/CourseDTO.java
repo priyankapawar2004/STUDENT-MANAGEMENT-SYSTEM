@@ -3,6 +3,7 @@ package com.example.demo.dto;
 import java.math.BigDecimal;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class CourseDTO {
@@ -19,7 +20,7 @@ public class CourseDTO {
 	@NotBlank(message = "Course duration is required.")
 	private String duration;
 	
-	@NotBlank(message = "Course fee is required.")
+	@NotNull(message = "Course fee is required.")
 	private BigDecimal fee;
 	
 	@Size(max=500, message ="Max of 500 charcters allowed")
