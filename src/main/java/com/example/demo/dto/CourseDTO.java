@@ -26,6 +26,16 @@ public class CourseDTO {
 	@Size(max=500, message ="Max of 500 charcters allowed")
 	private String description;
 
+	private boolean active; 
+	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	public Long getId() {
 		return id;
 	}

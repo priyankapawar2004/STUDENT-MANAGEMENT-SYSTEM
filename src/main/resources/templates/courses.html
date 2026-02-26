@@ -17,14 +17,15 @@
                     </a>
                 </div>
                 
-                <div th:if="${message}" class="alert alert-info text-center" role="alert" th:text="${message}"></div>
+                <div th:if="${message}" class="alert alert-success text-center" role="alert" th:text="${message}"></div>
 
                 <div class="card mb-4">
                     <div class="card-header bg-white">
                         <i class="bi bi-table me-1"></i> Course List
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+						<div class="text-muted" th:if= "${courses.isEmpty()}">No course found</div>
+                        <div class="table-responsive" th:if= "${!courses.isEmpty()}">
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
@@ -38,11 +39,11 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="course : ${courses}">
-                                        <td th:text="${course.id}"></td>
-                                        <td th:text="${course.courseName}"></td>
-                                        <td th:text="${course.courseCode}"></td>
-                                        <td th:text="${course.fee}"></td>
-                                        <td th:text="${course.duration}"></td>
+                                        <td data-label="ID"            th:text="${course.id}"></td>
+                                        <td  data-label="course name"  th:text="${course.courseName}"></td>
+                                        <td  data-label="course code"  th:text="${course.courseCode}"></td>
+                                        <td  data-label="course fee"   th:text="${course.fee}"></td>
+                                        <td  data-label="duration"     th:text="${course.duration}"></td>
                                         <td>
                                             <a th:href="@{/course/view/{id}(id=${course.id})}" class="btn btn-sm btn-info text-white me-1">
                                                 <i class="bi bi-eye"></i>
@@ -53,7 +54,7 @@
                                         </td>
                                     </tr>
                                     
-                                    <tr th:if="${#lists.isEmpty(courses)}">
+                                    <tr th:if="${courses.isEmpty()}">
                                         <td colspan="6" class="text-center py-4 text-muted">
                                             No courses found in database. Click "Add New Course" to get started.
                                         </td>
@@ -62,11 +63,20 @@
                             </table>
                         </div>
 
-                        <nav aria-label="Course pagination" th:if="${not #lists.isEmpty(courses)}">
+                        <nav aria-label="Course pagination" th:if="${!courses.isEmpty()}">
                             <ul class="pagination justify-content-end mt-3">
-                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+								
+								<li class="page-item" th:classappend="${courses.first} ? 'disabled'">
+								    <a class="page-link" th:href="@{/course/list(page=${courses.number - 1})}">Previous</a>
+								</li>
+								
+								<li class="page-item active">
+								    <a class="page-link" th:text="${courses.number + 1}">1</a>
+								</li>
+								
+								<li class="page-item" th:classappend="${courses.last} ? 'disabled'">
+								    <a class="page-link" th:href="@{/course/list(page=${courses.number + 1})}">Next</a>
+								</li>
                             </ul>
                         </nav>
                     </div>
