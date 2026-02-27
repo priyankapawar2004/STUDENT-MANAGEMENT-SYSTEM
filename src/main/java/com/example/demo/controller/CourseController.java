@@ -67,7 +67,7 @@ public class CourseController {
 			if(courseService.existsByCode(courseDTO.getCourseCode())) {
 				Log.error("post/course - code must be unique");
 				
-				bindingResult.rejectValue("coursecode",null, "Code must be unique");
+				bindingResult.rejectValue("courseCode",null, "Code must be unique");
 				return "add-course";
 				
 			}
@@ -88,6 +88,44 @@ public class CourseController {
 		return "view-course";
 		
 	}
+	@GetMapping("/edit/{id}")
+	public String editCourse(@PathVariable Long id, Model model) {
+		CourseDTO course = courseService.getCourseById(id);
+		model.addAttribute("courseDto", course);
+		
+		return "edit-course";
+		
+	}
+	@PostMapping("/update/{id}")
+	public String updateCourse(@PathVariable Long id,
+			@Valid @ModelAttribute("courseDto") CourseDTO courseDTO, 
+			BindingResult bindingResult,
+			Model model,
+			RedirectAttributes redirectAttributes) {
+		
+	
+	Log.info("post/update/{id} - update course request received.{}", id);
+	
+	if(bindingResult.hasErrors()) {
+		Log.error("post/update/{id} - page return due to validation error");
+		return "edit-course";
+	}
+	if(courseService. existsByCourseCodeAndIdNot(courseDTO.getCourseCode(), id)) {
+		Log.error("post/update/{id} - code must be unique");
+		
+		bindingResult.rejectValue("courseCode",null, "Code must be unique");
+		return "edit-course";
+		
+	}
+	
+	courseService.updateCourse(id , courseDTO);
+	 redirectAttributes.addFlashAttribute("message" , "Course is updated succesfully!!");
+	
+	 Log.info("post/update/{id} - updated course successfully created.");
+	
+	
+	return"redirect:/course/list";
+}
 	}
 
 		

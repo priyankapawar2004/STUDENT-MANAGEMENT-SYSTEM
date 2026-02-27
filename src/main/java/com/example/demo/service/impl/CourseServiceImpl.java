@@ -41,7 +41,7 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public boolean existsByCode(String code) {
 		Log.info("checking if code exists : {}", code);
-		return courseRepository.existsByCourseCodeIgnoreCase(code);
+		return courseRepository.existsByCodeIgnoreCase(code);
 	}
 	
 	@Override
@@ -64,6 +64,24 @@ public class CourseServiceImpl implements CourseService{
 	
 	return mapper.map(course, CourseDTO.class);
 }
+
+	@Override
+	public CourseDTO updateCourse(Long id, CourseDTO courseDTO) {
+		Courses course = courseRepository.findById(id)
+                .orElseThrow(() ->  new RuntimeException("No course found"));
+		
+		mapper.map(courseDTO, course);
+		
+		Courses updated = courseRepository.save(course);
+		
+		return mapper.map(updated,CourseDTO.class);
+	}
+
+	@Override
+	public boolean existsByCourseCodeAndIdNot(String code, Long id) {
+		Log.info("code from update page : {}, id :{} " , code , id);
+		return courseRepository.existsByCourseCodeIgnoreCaseAndIdNot(code,id);
+	}
 }	
 	
 	
