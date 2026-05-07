@@ -4,11 +4,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.dto.StudentDTO;
 import com.example.demo.service.StudentService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/students")
@@ -36,6 +42,31 @@ public class StudentController {
     	return "students";
     	
     }
+    @PostMapping("/save")
+    public String createStudent(@Valid @ModelAttribute("studentDto") StudentDTO studentDTO , 
+			BindingResult bindingResult,
+			Model model,
+			RedirectAttributes redirectAttributes) {
+    	
+    	log.info("post/save -create student request received");
+    	
+    	if(bindingResult.hasErrors()) {
+    		return "add-student";
+    	}
+    	
+    	if( studentService.existsByEmailIgnoreCase(studentDTO.getEmail())) {
+    		log.error("post/save - email must be unique");
+    		
+    		bindingResult.rejectValue("email",null, "email must be unique");
+    		return "add-student";
+    	}
+    	
+    	 StudentService.
+    	
+    	
+    	return"";
+    }
+    
     
     
     

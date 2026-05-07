@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.model.Students;
 
-public interface StudentRopository extends  JpaRepository <Students, Long>{
+public interface StudentRepository extends  JpaRepository <Students, Long>{
 
 	boolean existsByEmailIgnoreCase(String email);
 }
