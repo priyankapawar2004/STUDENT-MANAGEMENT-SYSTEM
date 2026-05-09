@@ -61,10 +61,12 @@ public class StudentController {
     		return "add-student";
     	}
     	
-    	 StudentService.
+    	 studentService.createStudent(studentDTO);
+    	 redirectAttributes.addFlashAttribute("message" , "student is added succesfully!!");
+			
     	
     	
-    	return"";
+    	return"redirect:/students/list";
     }
     
     

@@ -36,8 +36,10 @@ import com.example.demo.service.StudentService;
 }
 	@Override
 	public StudentDTO createStudent(StudentDTO studentDTO) {
+		Log.info("saving student data");
+		
 		Students student=mapper.map(studentDTO, Students.class);
-		Students saved = studentRepository.save(Student);
+		Students saved = studentRepository.save(student);
 		
 		return mapper.map(saved, StudentDTO.class);
 	}
