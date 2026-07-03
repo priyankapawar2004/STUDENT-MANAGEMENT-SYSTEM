@@ -2,9 +2,14 @@ package com.example.demo.service.impl;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.dto.CourseDTO;
 import com.example.demo.dto.StudentDTO;
 import com.example.demo.model.Students;
 import com.example.demo.repository.StudentRepository;
@@ -42,6 +47,18 @@ import com.example.demo.service.StudentService;
 		Students saved = studentRepository.save(student);
 		
 		return mapper.map(saved, StudentDTO.class);
+	}
+
+	@Override
+	public Page<StudentDTO> getStudents(int page, int size) {
+		Log.info("list of student from : {}", page );
+		
+		PageRequest pagerequest = PageRequest.of(page, size, Sort.by(Direction.DESC, "id"));
+		
+		
+		return  studentRepository.findByActiveTrue(pagerequest)
+		.map(student -> mapper.map(student, StudentDTO.class));
+		
 	}
 	
 	
