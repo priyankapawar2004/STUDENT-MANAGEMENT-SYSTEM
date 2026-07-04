@@ -39,11 +39,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="student : ${students.content}">>
-                                        <td data-label="ID"  th:text="$student.id}"></td></td>
-                                        <td data-label="Name"  th:text="|${student.firstName} ${student.lastName}|"></td></td>
-                                        <td data-label="Email"  th:text="${student.email}"></td></td>
-										<td data-label="Phone"  th:text="${student.phonenumber}"></td>></td>
+                                    <tr th:each="student : ${students.content}">
+                                        <td data-label="ID"  th:text="${student.id}"></td>
+                                        <td data-label="Name"  th:text="|${student.firstName} ${student.lastName}|"></td>
+                                        <td data-label="Email"  th:text="${student.email}"></td>
+										<td data-label="Phone"  th:text="${student.phonenumber}"></td>
                                         <td data-label="Actions">
 										
                                             <a href="view-student.html" class="btn btn-sm btn-info text-white me-1"
@@ -60,14 +60,20 @@
 						    <ul class="pagination justify-content-end">
 						
 						        <!-- Previous -->
-						        <li class="page-item">
-						            <a class="page-link" href="/courses?page=1&size=10">Previous</a>
+						        <li class="page-item" th:classappend="${students.first} ? 'disabled'">
+						            <a class="page-link" th:href="@{/students/list(page=${students.first ? 0 : students.number -1},size=${students.size})}">Previous</a>
 						        </li>
+								
+								<!-- Page numbers -->
+			                     <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, students.totalPages-1)}"
+									th:classappend = "${pageNum} == ${students.number} ? 'active' : ''">
+			                          <a class="page-link" th:href="@{/students/list(page=${pageNum},size=${students.size})}" th:text="${pageNum + 1}"></a>
+							     </li>
 						
 						       
 						        <!-- Next -->
-						        <li class="page-item">
-						            <a class="page-link" href="/courses?page=3&size=10">Next</a>
+						        <li class="page-item"  th:classappend="${students.last} ? 'disabled'">
+						            <a class="page-link" th:href="@{/students/list(page=${students.last ? 0 : students.number +1},size=${students.size})}">Next</a>
 						        </li>
 						
 						    </ul>
