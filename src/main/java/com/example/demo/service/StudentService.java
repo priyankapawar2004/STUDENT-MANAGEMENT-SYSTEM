@@ -12,5 +12,7 @@ public interface StudentService {
 	
 	Page<StudentDTO> getStudents(int page, int size);
 	
+	StudentDTO getStudentById(Long id);
+	
 
 }

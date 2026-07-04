@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.CourseDTO;
 import com.example.demo.dto.StudentDTO;
+import com.example.demo.model.Courses;
 import com.example.demo.model.Students;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.service.StudentService;
@@ -59,6 +60,16 @@ import com.example.demo.service.StudentService;
 		return  studentRepository.findByActiveTrue(pagerequest)
 		.map(student -> mapper.map(student, StudentDTO.class));
 		
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public StudentDTO getStudentById(Long id) {
+		Students student = studentRepository.findById(id)
+                .orElseThrow(() ->  new RuntimeException("No student found"));
+
+           return mapper.map(student,  StudentDTO.class);
+
 	}
 	
 	
