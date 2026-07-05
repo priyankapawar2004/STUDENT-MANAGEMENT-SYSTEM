@@ -85,9 +85,41 @@ public class StudentController {
 		
 		return "view-student";
     
+    }
+    @GetMapping("/{id}/edit")
+   	public String editstudentById(@PathVariable Long id, Model model) {
+       	 StudentDTO student = studentService.getStudentById(id);
+   		model.addAttribute("studentDto", student);
+   		
+   		return "edit-student";
+    }
+       
+   		@PostMapping("/update/{id}")
+   		public String updateStudent(@PathVariable Long id,
+   				@Valid @ModelAttribute("studentDto")  StudentDTO studentDto, 
+   				BindingResult bindingResult,
+   				Model model,
+   				RedirectAttributes redirectAttributes) {
     
-    
-    
+   			log.info("post/update -update student request received");
+   	    	
+   	    	if(bindingResult.hasErrors()) {
+   	    		return "edit-student";
+   	    	}
+   	    	
+   	    	if( studentService.existsByEmailIgnoreCaseAndIdNot(studentDto.getEmail(),id)) {
+   	    		log.error("post/update - email must be unique");
+   	    		
+   	    		bindingResult.rejectValue("email",null, "email must be unique");
+   	    		return "edit-student";
+   	    	}
+   	    	
+   	    	 studentService.updateStudent(id, studentDto);
+   	    	 redirectAttributes.addFlashAttribute("message" , "student is updated succesfully!!");
+   				
+   	    
+   	    	
+   	    	return"redirect:/students/list";
     
     
     

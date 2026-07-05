@@ -34,7 +34,7 @@ import com.example.demo.service.StudentService;
 		}
 		
 	@Override
-	public boolean existsByEmailIgnoreCase(String email) {
+	public boolean existsByEmailIgnoreCase(String email) { 
 		Log.info("email from create student");
 		
 	return studentRepository. existsByEmailIgnoreCase(email);
@@ -70,6 +70,26 @@ import com.example.demo.service.StudentService;
 
            return mapper.map(student,  StudentDTO.class);
 
+	}
+
+	@Override
+	public boolean existsByEmailIgnoreCaseAndIdNot(String email, Long id) {
+		Log.info("email from update student");
+		
+		return studentRepository. existsByEmailIgnoreCaseAndIdNot(email,id);
+		
+	}
+
+	@Override
+	public StudentDTO updateStudent(Long id, StudentDTO studentDTO) {
+		Students student  = studentRepository.findById(id)
+                .orElseThrow(() ->  new RuntimeException("No course found"));
+		
+		mapper.map(studentDTO, student);
+		
+		Students updated = studentRepository.save( student);
+		
+		return mapper.map(updated,StudentDTO.class);
 	}
 	
 	

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head}"></head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div th:replace="~{fragments/layout :: sidebar}"></div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <div th:replace="~{fragments/layout :: navbar}"></div>
+
+            <div class="container-fluid px-4 py-4">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Update Student</h2>
+
+                    <a th:href="@{/students/list}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Back to List
+                    </a>
+                </div>
+
+                <div class="card mb-4">
+
+                    <div class="card-header bg-white">
+                        <i class="bi bi-person-plus me-1"></i>
+                        Student Details
+                    </div>
+
+                    <div class="card-body">
+
+                   
+							  
+							  <form th:action="@{/students/update/{id}(id=${studentDto.id})}" th:object="${studentDto}" method="post">
+								<input type="hidden" th:field="*{id}">
+								
+								
+                            <!-- First Name + Last Name -->
+                            <div class="row mb-3">
+
+                                <div class="col-md-6">
+
+                                    <label for="firstName" class="form-label">
+                                        First Name
+                                    </label>
+
+                                    <input type="text"
+                                           th:field="*{firstName}"
+                                           class="form-control"
+                                           id="firstName"
+                                           placeholder="e.g. John"
+                                           required>
+
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('firstName')}"
+                                         th:errors="*{firstName}">
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label for="lastName" class="form-label">
+                                        Last Name
+                                    </label>
+
+                                    <input type="text"
+                                           th:field="*{lastName}"
+                                           class="form-control"
+                                           id="lastName"
+                                           placeholder="e.g. Doe"
+                                           required>
+
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('lastName')}"
+                                         th:errors="*{lastName}">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Email + Phone -->
+                            <div class="row mb-3">
+
+                                <div class="col-md-6">
+
+                                    <label for="email" class="form-label">
+                                        Email Address
+                                    </label>
+
+                                    <input type="email"
+                                           th:field="*{email}"
+                                           class="form-control"
+                                           id="email"
+                                           placeholder="e.g. john.doe@example.com"
+                                           required>
+
+                                    <div class="text-danger"
+                                         th:if="${#fields.hasErrors('email')}"
+                                         th:errors="*{email}">
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <label for="phone" class="form-label">
+                                        Phone Number
+                                    </label>
+
+                                    <input type="tel"
+                                          th:field="*{phonenumber}"
+                                           class="form-control"
+                                           id="phone"
+                                           placeholder="e.g. +1 234 567 8900">
+
+										   <div class="text-danger"
+										        th:if="${#fields.hasErrors('phonenumber')}"
+										        th:errors="*{phonenumber}">
+										   </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Address -->
+                            <div class="mb-3">
+
+                                <label for="address" class="form-label">
+                                    Address
+                                </label>
+
+                                <textarea th:field="*{address}"
+                                          class="form-control"
+                                          id="address"
+                                          rows="3"
+                                          placeholder="Enter full address...">
+                                </textarea>
+
+                                <div class="text-danger"
+                                     th:if="${#fields.hasErrors('address')}"
+                                     th:errors="*{address}">
+                                </div>
+
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="d-flex justify-content-end">
+
+                                <button type="reset"
+                                        class="btn btn-light me-2">
+                                    Reset
+                                </button>
+
+                                <button type="submit"
+                                        class="btn btn-primary">
+
+                                    <i class="bi bi-save me-1"></i>
+                                    update Student
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+</body>
+
+</html>
