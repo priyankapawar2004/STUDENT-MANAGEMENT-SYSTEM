@@ -1,4 +1,6 @@
 package com.example.demo.service;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 
@@ -17,6 +19,8 @@ public interface StudentService {
 	StudentDTO getStudentById(Long id);
 	
 	StudentDTO updateStudent(Long id, StudentDTO studentDTO);
+	
+	 List<StudentDTO> getAllStudents();
 	
 
 }

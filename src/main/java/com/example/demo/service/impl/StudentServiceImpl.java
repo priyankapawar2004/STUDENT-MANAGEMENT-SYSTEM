@@ -1,4 +1,7 @@
 package com.example.demo.service.impl;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.CourseDTO;
 import com.example.demo.dto.StudentDTO;
-import com.example.demo.model.Courses;
 import com.example.demo.model.Students;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.service.StudentService;
@@ -90,6 +92,13 @@ import com.example.demo.service.StudentService;
 		Students updated = studentRepository.save( student);
 		
 		return mapper.map(updated,StudentDTO.class);
+	}
+	@Override
+	public List<StudentDTO> getAllStudents() {
+		
+		return studentRepository.findByActiveTrue(Sort.by("courseName")).stream()
+				.map(student -> mapper.map(student, StudentDTO.class))
+		         .collect(Collectors.toList());
 	}
 	
 	

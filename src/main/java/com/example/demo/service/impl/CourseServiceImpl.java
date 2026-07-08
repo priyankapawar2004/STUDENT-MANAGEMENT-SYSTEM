@@ -1,5 +1,8 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,6 +84,14 @@ public class CourseServiceImpl implements CourseService{
 	public boolean existsByCourseCodeAndIdNot(String code, Long id) {
 		Log.info("code from update page : {}, id :{} " , code , id);
 		return courseRepository.existsByCourseCodeIgnoreCaseAndIdNot(code,id);
+	}
+
+	@Override
+	public List<CourseDTO> getAllCourses() {
+		
+		return courseRepository.findByActiveTrue(Sort.by("courseName")).stream()
+				.map(course -> mapper.map(course, CourseDTO.class))
+		         .collect(Collectors.toList());
 	}
 }	
 	
