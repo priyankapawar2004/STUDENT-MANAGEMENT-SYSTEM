@@ -96,7 +96,7 @@ import com.example.demo.service.StudentService;
 	@Override
 	public List<StudentDTO> getAllStudents() {
 		
-		return studentRepository.findByActiveTrue(Sort.by("courseName")).stream()
+		return studentRepository.findByActiveTrue().stream()
 				.map(student -> mapper.map(student, StudentDTO.class))
 		         .collect(Collectors.toList());
 	}
