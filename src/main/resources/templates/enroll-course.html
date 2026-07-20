@@ -24,7 +24,9 @@
                         <a th:href="@{/students/list}" class="btn btn-light text-primary fw-semibold"><i class="bi bi-arrow-left me-1"></i> Back to Students</a>
                     </div>
                 </div>
-
+				
+				<form th:action="@{/enrollments/assign}" th:object="${enrollmentDto}" method="post">
+					
                 <div class="row g-4">
                     <!-- Left: Course selection -->
                     <div class="col-lg-8">
@@ -49,11 +51,11 @@
                                                 <td data-label="Select">
                                                     <div class="form-check">
                                                         <input class="form-check-input course checkbox" type="checkbox" 
-														th:field = "{courseIds}"
+														th:field="*{courseIds}"
 														th:value = "${course.id}"
 														th:id = "|course-${course.id}|"
 														th:data-fee = "${course.fee}"
-														th:data-name = "${course.name}">
+														th:data-name = "${course.courseName}">
 														
                                                     </div>
 													
@@ -123,6 +125,7 @@
                     </div>
                 </div>
             </div>
+			</form>
         </div>
     </div>
 
