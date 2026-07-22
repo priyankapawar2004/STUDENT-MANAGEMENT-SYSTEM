@@ -133,44 +133,52 @@
 	 
 	 <script th:inline="javascript">
 		
-		const checkboxes = document.querySelectorAll(".course-checkbox");
+		const checkboxes = document.querySelectorAll(".course");
 		const selectedCourseCount = document.getElementById("selectedCourseCount");
 	    const totalfees = document.getElementById("totalfees");
 	    const selectedCourses = document.getElementById("selectedCourses");
 		
-		let selected = [];
-		let total = 0;
-		checkboxes.ForEach(cb={
-			if(cb.checked){
-				selected.push({
-					name:cb.dataset.name,
-					fee:cb.dataset.fee
-				})
-				const fee = parseFloat(cb.dataset.fee || "0")
-				total = total+fee
-			}
-		});
-		selectedCourseCount.textContent = selected.length.toString();
-		totalfees.textContent = "Rs." + total;
 		
-		
-	 selectedCourses.innerHTML = "";
-		if(selected.length == 0){
-			selectedCourses.innerHTML = "<li>No course selected</li>"
-			}
-			else{
-				selected.ForEach(item => {
-					const li = document.createElement("li");
-					li.textContent = '${item.name} Rs.${item.fee}'
-					selectedCourses.appendChild(li)
-				}
+		function updateSummary(){
 			
+			let selected = [];
+					let total = 0;
+					checkboxes.forEach(cb => {
+						if(cb.checked){
+							selected.push({
+								name:cb.dataset.name,
+								fee:cb.dataset.fee
+							})
+							const fee = parseFloat(cb.dataset.fee || "0")
+							total = total+fee
+						}
+					});
+					selectedCourseCount.textContent = selected.length.toString();
+					totalfees.textContent = "Rs." + total;
+					
+					
+				 selectedCourses.innerHTML = "";
+					if(selected.length == 0){
+						selectedCourses.innerHTML = "<li>No course selected</li>"
+						}
+						else{
+							selected.forEach(item => {
+								const li = document.createElement("li");
+								li.textContent = `${item.name} Rs.${item.fee}`
+								selectedCourses.appendChild(li)
+							});
+					      }
+				        }
+						
+						document.addEventListener("DOMContentLoaded" , () => {
+							
+							checkboxes.forEach(cb => {
+								cb.addEventListener("change" , updateSummary);
+						});
+						
+						updateSummary();
 		
-			
-		)
-		}
-		
-		
+	 });
 	 
 	 
 	 
@@ -191,8 +199,7 @@
 	 
 	 
 	 
-	 
-	 
+	 </script>
 	</body>
 </body>
 
