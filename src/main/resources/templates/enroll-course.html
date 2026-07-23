@@ -137,6 +137,10 @@
 		const selectedCourseCount = document.getElementById("selectedCourseCount");
 	    const totalfees = document.getElementById("totalfees");
 	    const selectedCourses = document.getElementById("selectedCourses");
+		const selectedStudent = document.getElementById("selectedStudent");
+		const selectedEmail = document.getElementById("selectedEmail");
+		const studentSelect = document.getElementById("studentSelect");
+				
 		
 		
 		function updateSummary(){
@@ -170,15 +174,27 @@
 					      }
 				        }
 						
+						function  updateStudent(){
+							const studentValues = studentSelect && studentSelect.value ?  studentSelect.options[ studentSelect.selectedIndex] : null;
+							selectedStudent.textContent = studentValues ? studentValues.dataset.name : '';
+							selectedEmail.textContent = studentValues ? studentValues.dataset.email : '';
+						}
+						
 						document.addEventListener("DOMContentLoaded" , () => {
 							
 							checkboxes.forEach(cb => {
 								cb.addEventListener("change" , updateSummary);
+								
+								if(studentSelect){
+									studentSelect.addEventListener("change" , updateStudent);
+																	
+								}
 						});
 						
 						updateSummary();
 		
 	 });
+	 
 	 
 	 
 	 
