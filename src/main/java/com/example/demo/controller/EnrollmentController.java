@@ -4,12 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.dto.EnrollmentDTO;
 import com.example.demo.service.CourseService;
+import com.example.demo.service.EnrollmentService;
 import com.example.demo.service.StudentService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/enrollments")
@@ -19,10 +26,12 @@ public class EnrollmentController {
 	
 	private final CourseService courseService;
 	private final StudentService studentService;
+	private final EnrollmentService enrollmentService;
 	
 	public EnrollmentController(CourseService courseService,StudentService studentService) {
 		this.courseService = courseService;
 		this.studentService = studentService;
+		this.enrollmentService = enrollmentService;
 	}
 	
 	@GetMapping("/showEnroll")
@@ -35,5 +44,73 @@ public class EnrollmentController {
 		
 		return "enroll-course";
 	}
+	
+	@GetMapping("/enrollmentList")
+	public String enrollmentList(Model model) {
+		Log.info("Get/enrollments/showEnroll- showing enrollment page");
+		
+		
+		return "enroll-course";
+	}
+	
+	@PostMapping("/enrollCourse")
+	public String enrollCourse(@Valid @ModelAttribute("enrollmentDto") EnrollmentDTO enrollmentDto, 
+		BindingResult bindingResult,
+		Model model,
+		RedirectAttributes redirectAttributes) {
+		
+		Log.info("post/enrollments/enrollCourse - create course request received");
+		
+		if(bindingResult.hasErrors()) {
+			
+			model.addAttribute("courseList", courseService.getAllCourses());
+			model.addAttribute("studentList", studentService.getAllStudents());
+		
+			return "enroll-course";
+		}
+		
+		enrollmentService.enrollStudentToCourses(enrollmentDTO);
+		
+		
+		redirectAttributes.addFlashAttribute("message" , "Enrollment succesfully!!");
+		
+		 Log.info("post/enrollments/enrollCourse - Enrollment succesfully.");
+		
+		
+		return"redirect:/enrollments/enrollmentList";
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+			
 
 }
