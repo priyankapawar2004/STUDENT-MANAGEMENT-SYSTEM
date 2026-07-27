@@ -28,7 +28,10 @@ public class EnrollmentController {
 	private final StudentService studentService;
 	private final EnrollmentService enrollmentService;
 	
-	public EnrollmentController(CourseService courseService,StudentService studentService) {
+	public EnrollmentController(CourseService courseService,
+			StudentService studentService, 
+			EnrollmentService enrollmentService)
+	{
 		this.courseService = courseService;
 		this.studentService = studentService;
 		this.enrollmentService = enrollmentService;
@@ -50,8 +53,11 @@ public class EnrollmentController {
 		Log.info("Get/enrollments/showEnroll- showing enrollment page");
 		
 		
-		return "enroll-course";
+		return "enroll-students";
 	}
+	
+	
+	
 	
 	@PostMapping("/enrollCourse")
 	public String enrollCourse(@Valid @ModelAttribute("enrollmentDto") EnrollmentDTO enrollmentDto, 
@@ -69,7 +75,7 @@ public class EnrollmentController {
 			return "enroll-course";
 		}
 		
-		enrollmentService.enrollStudentToCourses(enrollmentDTO);
+		enrollmentService.enrollStudentToCourses(enrollmentDto);
 		
 		
 		redirectAttributes.addFlashAttribute("message" , "Enrollment succesfully!!");
@@ -78,14 +84,6 @@ public class EnrollmentController {
 		
 		
 		return"redirect:/enrollments/enrollmentList";
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	}
 		

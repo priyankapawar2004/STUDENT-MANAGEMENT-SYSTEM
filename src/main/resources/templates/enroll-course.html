@@ -92,7 +92,7 @@
                                     <label for="studentSelect" class="form-label">Select Student</label>
                                     <select id="studentSelect" class="form-select mb-2" 
 									th:field = "*{studentId}"
-										th:classappend = "${#fields.hasErrors('{studentId')} ? 'is-invalid' : '' " >
+										th:classappend = "${#fields.hasErrors('studentId') ? 'is-invalid' : ''}" >
                                         <option value="" selected>Select a student</option>
 										<option th:each="student : ${studentList}"
 										        th:value="${student.id}"
