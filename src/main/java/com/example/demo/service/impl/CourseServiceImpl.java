@@ -44,7 +44,7 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public boolean existsByCode(String code) {
 		Log.info("checking if code exists : {}", code);
-		return courseRepository.existsByCodeIgnoreCase(code);
+		return courseRepository.existsByCourseCodeIgnoreCase(code);
 	}
 	
 	@Override

@@ -50,8 +50,9 @@ public class EnrollmentController {
 	
 	@GetMapping("/enrollmentList")
 	public String enrollmentList(Model model) {
-		Log.info("Get/enrollments/showEnroll- showing enrollment page");
 		
+		 model.addAttribute("enrollments",
+		            enrollmentService.getAllEnrollments());
 		
 		return "enroll-students";
 	}
