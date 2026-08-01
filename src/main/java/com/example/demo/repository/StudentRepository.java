@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,7 +20,17 @@ public interface StudentRepository extends  JpaRepository <Students, Long>{
 	
 	List<Students> findByActiveTrue();
 	
-	
-	@Query("""" select """)
-	Page<Students> findEnrolledstudents(Pageable pageable);
+	@EntityGraph(attributePaths = {"enrollments" , "enrollments.course"})
+	@Query(value = """
+			        select  distinct s
+			        from students s
+			        join s.enrollments e
+			""" ,
+			
+		countQuery = """
+					  select count (distinct s)
+			          from students s
+			          join s.enrollments e
+					""")
+	Page<Students> findEnrolledStudents(Pageable pageable);
 }
