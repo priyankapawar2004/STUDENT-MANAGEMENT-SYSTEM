@@ -23,13 +23,13 @@ public interface StudentRepository extends  JpaRepository <Students, Long>{
 	@EntityGraph(attributePaths = {"enrollments" , "enrollments.course"})
 	@Query(value = """
 			        select  distinct s
-			        from students s
+			        from Students s
 			        join s.enrollments e
 			""" ,
 			
 		countQuery = """
 					  select count (distinct s)
-			          from students s
+			          from Students s
 			          join s.enrollments e
 					""")
 	Page<Students> findEnrolledStudents(Pageable pageable);
