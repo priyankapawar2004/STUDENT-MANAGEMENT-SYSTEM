@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,9 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.dto.EnrollmentDTO;
+import com.example.demo.dto.EnrollmentSummaryDTO;
 import com.example.demo.service.CourseService;
 import com.example.demo.service.EnrollmentService;
 import com.example.demo.service.StudentService;
@@ -49,12 +52,18 @@ public class EnrollmentController {
 	}
 	
 	@GetMapping("/enrollmentList")
-	public String enrollmentList(Model model) {
-		
-		 model.addAttribute("enrollments",
-		            enrollmentService.getAllEnrollments());
-		
-		return "enroll-students";
+	public String enrollmentList(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size,
+            Model model,
+	 @RequestParam(value="message", required = false)String message)
+    {
+    	Log.info("Get/students- showing enrolled student list page");
+    	
+    	Page <EnrollmentSummaryDTO> students = enrollmentService.getEnrolledStudents(page, size);
+		model.addAttribute("students" , students);
+		model.addAttribute("message" ,message);
+    	
+    	return "enrolled-students";
 	}
 	
 	
