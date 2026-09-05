@@ -63,28 +63,37 @@
 							        <th>Email</th>
 							        <th>Course Count</th>
 							        <th>Total Fee</th>
+							        <th>Actions</th>
 							    </tr>
 							</thead>
-
                             
 							<tbody>
 
-							    <tr th:if="${students == null or students.isEmpty()}">
-							        <td colspan="5" class="text-center text-muted">
+							    <tr th:if="${students == null or students.empty}">
+							        <td colspan="6" class="text-center text-muted">
 							            No enrollments found.
 							        </td>
 							    </tr>
 
 							    <tr th:each="student, stat : ${students}">
 							        <td th:text="${stat.count}"></td>
+
 							        <td th:text="${student.studentName}"></td>
+
 							        <td th:text="${student.email}"></td>
+
 							        <td th:text="${student.courseCount}"></td>
+
 							        <td th:text="${'Rs. ' + student.totalFee}"></td>
+
+							        <td>
+							            <a href="#" class="btn btn-info btn-sm text-white">
+							                <i class="bi bi-eye"></i>
+							            </a>
+							        </td>
 							    </tr>
 
 							</tbody>
-
 								</table>
 
 								</div>
