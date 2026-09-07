@@ -97,6 +97,28 @@
 								</table>
 
 								</div>
+								<nav aria-label="Course pagination">
+														    <ul class="pagination justify-content-end">
+														
+														        <!-- Previous -->
+														        <li class="page-item" th:classappend="${students.first} ? 'disabled'">
+														            <a class="page-link" th:href="@{/enrollments/enrollmentList(page=${students.first ? 0 : students.number -1},size=${students.size})}">Previous</a>
+														        </li>
+																
+																<!-- Page numbers -->
+											                     <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, students.totalPages-1)}"
+																	th:classappend = "${pageNum} == ${students.number} ? 'active' : ''">
+											                          <a class="page-link" th:href="@{/enrollments/enrollmentList(page=${pageNum},size=${students.size})}" th:text="${pageNum + 1}"></a>
+															     </li>
+														
+														       
+														        <!-- Next -->
+														        <li class="page-item"  th:classappend="${students.last} ? 'disabled'">
+														            <a class="page-link" th:href="@{/enrollments/enrollmentList(page=${students.last ? 0 : students.number +1},size=${students.size})}">Next</a>
+														        </li>
+														
+														    </ul>
+														</nav>
 
 								</div>
 
