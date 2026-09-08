@@ -2,7 +2,9 @@ package com.example.demo.service.impl;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.CourseDTO;
 import com.example.demo.dto.EnrollmentDTO;
 import com.example.demo.dto.EnrollmentSummaryDTO;
 import com.example.demo.model.Courses;
@@ -29,12 +32,17 @@ public class EnrollmentServiceImpl implements  EnrollmentService{
 	private final EnrollmentRepository enrollmentRepository;
 	private final StudentRepository  studentRepository;
 	private final CourseRepository courseRepository;
+	private final ModelMapper mapper;
 	
-	EnrollmentServiceImpl(EnrollmentRepository enrollmentRepository , StudentRepository  studentRepository , CourseRepository courseRepository){
+	EnrollmentServiceImpl(EnrollmentRepository enrollmentRepository , 
+			StudentRepository  studentRepository ,
+			CourseRepository courseRepository,
+			ModelMapper mapper)
+	{
 		this.enrollmentRepository = enrollmentRepository;
 		this. studentRepository = studentRepository;
 		this.courseRepository = courseRepository;
-		
+		this.mapper = mapper;
 	}
 	
 	@Override
@@ -101,6 +109,38 @@ public class EnrollmentServiceImpl implements  EnrollmentService{
 			return dto;
 			});
 			
+	  }
+
+	  @Override
+	  public EnrollmentSummaryDTO findEnrolledStudentCourseDetails(Long studentId) {
+	
+			
+		return studentRepository.findEnrolledStudentCourseDetails(studentId)
+				.map(student -> {
+					
+					EnrollmentSummaryDTO dto = new EnrollmentSummaryDTO();
+					dto.setStudentId(student.getId());
+					dto.setStudentName(student.getFirstName() + " " +student.getLastName());
+					dto.setEmail(student.getEmail());
+					
+					dto.setCourseCount(student.getEnrollments().size());
+					BigDecimal totalFee = student.getEnrollments().stream()
+							.map(enrollment -> enrollment.getCourse().getFee())
+							.filter(fee -> fee != null)
+							.reduce(BigDecimal.ZERO, BigDecimal::add);
+					         dto.setTotalFee(totalFee);
+					
+					         List<CourseDTO> courseList = student.getEnrollments().stream()
+					        		 .map(enrollment -> enrollment.getCourse().getFee())
+					        		 .map(course -> mapper.map(course, CourseDTO.class))
+					        		 .collect(Collectors.toList());
+					         
+					         
+					         dto.setCourseList(courseList);
+				return dto;
+					
+				})
+				.orElseThrow(() ->new RuntimeException("student not found"));
 	  }
 	  
 	  

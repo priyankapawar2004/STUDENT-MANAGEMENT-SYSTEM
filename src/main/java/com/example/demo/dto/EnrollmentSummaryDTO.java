@@ -1,6 +1,8 @@
 package com.example.demo.dto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnrollmentSummaryDTO {
 	
@@ -9,8 +11,15 @@ public class EnrollmentSummaryDTO {
 	private String email;
 	private int courseCount;
 	private BigDecimal totalFee;
+	private List< CourseDTO> courseList = new ArrayList<>();
 	
 	
+	public List<CourseDTO> getCourseList() {
+		return courseList;
+	}
+	public void setCourseList(List<CourseDTO> courseList) {
+		courseList = courseList;
+	}
 	public Long getStudentId() {
 		return studentId;
 	}
