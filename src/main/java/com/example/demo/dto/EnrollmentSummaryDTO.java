@@ -18,7 +18,7 @@ public class EnrollmentSummaryDTO {
 		return courseList;
 	}
 	public void setCourseList(List<CourseDTO> courseList) {
-		courseList = courseList;
+		this.courseList = courseList;
 	}
 	public Long getStudentId() {
 		return studentId;

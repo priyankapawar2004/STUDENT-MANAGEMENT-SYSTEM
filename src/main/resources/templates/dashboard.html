@@ -30,7 +30,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="card-title mb-0">Total Students</h6>
-                                        <h2 class="my-2">1,250</h2>
+                                        <h2 class="my-2" th:text="${dashboardStats.totalStudents}"></h2>
                                     </div>
                                     <i class="bi bi-people fs-1 opacity-50"></i>
                                 </div>
@@ -43,7 +43,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="card-title mb-0">Total Courses</h6>
-                                        <h2 class="my-2">42</h2>
+                                        <h2 class="my-2" th:text="${dashboardStats.totalCourses}"></h2>
                                     </div>
                                     <i class="bi bi-book fs-1 opacity-50"></i>
                                 </div>
@@ -56,7 +56,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="card-title mb-0">Top Performing Courses</h6>
-                                        <h2 class="my-2">CS101</h2>
+                                        <h2 class="my-2" th:text="${dashboardStats.topPerformingCourse}"></h2>
                                     </div>
                                     <i class="bi bi-trophy fs-1 opacity-50"></i>
                                 </div>
@@ -69,7 +69,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="card-title mb-0">Students Enrolled This Month</h6>
-                                        <h2 class="my-2">37</h2>
+                                        <h2 class="my-2" th:text="${dashboardStats.StudentsEnrolledThisMonth}"></h2>
                                     </div>
                                     <i class="bi bi-person-check fs-1 opacity-50"></i>
                                 </div>
@@ -83,44 +83,53 @@
                     <div class="card-header bg-white">
                         <i class="bi bi-table me-1"></i>
                         Recent Student Registrations
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Course</th>
-                                        <th>Enroll Date</th>
-                                        <th>Duration</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td data-label="ID">#STU001</td>
-                                        <td data-label="Name">John Doe</td>
-                                        <td data-label="Course">Computer Science</td>
-                                        <td data-label="Enroll Date">2023-10-05</td>
-                                        <td data-label="Duration">6 Months</td>
-                                    </tr>
-                                    <tr>
-                                        <td data-label="ID">#STU002</td>
-                                        <td data-label="Name">Jane Smith</td>
-                                        <td data-label="Course">Mathematics</td>
-                                        <td data-label="Enroll Date">2023-10-02</td>
-                                        <td data-label="Duration">5 Months</td>
-                                    </tr>
-                                    <tr>
-                                        <td data-label="ID">#STU003</td>
-                                        <td data-label="Name">Mike Johnson</td>
-                                        <td data-label="Course">Physics</td>
-                                        <td data-label="Enroll Date">2023-10-04</td>
-                                        <td data-label="Duration">6 Months</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+						
+						<div class="table-responsive">
+
+						                       <table class="table table-bordered table-hover align-middle">
+
+												<thead class="table-light">
+												    <tr>
+												        <th>#</th>
+												        <th>Student Name</th>
+												        <th>Email</th>
+												        <th>Course Count</th>
+												        <th>Total Fee</th>
+												        <th>Actions</th>
+												    </tr>
+												</thead>
+						                           
+												<tbody>
+
+												    <tr th:if="${students == null or students.empty}">
+												        <td colspan="6" class="text-center text-muted">
+												            No enrollments found.
+												        </td>
+												    </tr>
+
+												    <tr th:each="student, stat : ${students}">
+												        <td th:text="${stat.count}"></td>
+
+												        <td th:text="${student.studentName}"></td>
+
+												        <td th:text="${student.email}"></td>
+
+												        <td th:text="${student.courseCount}"></td>
+
+												        <td th:text="${'Rs. ' + student.totalFee}"></td>
+
+														<td>
+															<a th:href="@{/enrollments/getStudentEnrollmentDetails/{id}(id=${student.studentId},source='dashboard')}"
+															   class="btn btn-info btn-sm text-white">
+															    <i class="bi bi-eye"></i>
+															</a>
+														</td>
+												    </tr>
+
+												</tbody>
+													</table>
+
+													</div>
                     </div>
                 </div>
             </div>

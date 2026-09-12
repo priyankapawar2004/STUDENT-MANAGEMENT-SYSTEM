@@ -17,5 +17,7 @@ public interface EnrollmentService {
     Page<EnrollmentSummaryDTO> getEnrolledStudents(int page, int size);
     
     EnrollmentSummaryDTO findEnrolledStudentCourseDetails(Long studentId);
+    
+    List <EnrollmentSummaryDTO> getRecentlyEnrolledStudents();
 
 }

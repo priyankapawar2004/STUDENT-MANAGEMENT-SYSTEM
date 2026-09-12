@@ -38,6 +38,7 @@ public class CourseServiceImpl implements CourseService{
 	public CourseDTO createCourse(CourseDTO courseDTO) {
 		Log.info("creating course with code : {}", courseDTO.getCourseCode());
 		Courses courses = mapper.map(courseDTO , Courses.class);
+		courses.setActive(true);
 		courseRepository.save(courses);
 		return mapper.map(courses, CourseDTO.class);
 	}

@@ -40,11 +40,6 @@
 			<div th:if="${message}" class="alert alert-success text-center" role="alert" th:text="${message}"></div>
 
             <!-- Success Message -->
-            <div class="alert alert-success"
-                 th:if="${message}"
-                 th:text="${message}">
-            </div>
-
             <div class="card">
 
                 <div class="card-header bg-white">
@@ -88,11 +83,12 @@
 
 							        <td th:text="${'Rs. ' + student.totalFee}"></td>
 
-							        <td>
-							            <a href="#" class="btn btn-info btn-sm text-white">
-							                <i class="bi bi-eye"></i>
-							            </a>
-							        </td>
+									<td>
+									    <a th:href="@{/enrollments/getStudentEnrollmentDetails/{id}(id=${student.studentId},source='enrollments')}"
+									       class="btn btn-info btn-sm text-white">
+									        <i class="bi bi-eye"></i>
+									    </a>
+									</td>
 							    </tr>
 
 							</tbody>
@@ -108,15 +104,17 @@
 														        </li>
 																
 																<!-- Page numbers -->
-											                     <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, students.totalPages-1)}"
-																	th:classappend = "${pageNum} == ${students.number} ? 'active' : ''">
-											                          <a class="page-link" th:href="@{/enrollments/enrollmentList(page=${pageNum},size=${students.size})}" th:text="${pageNum + 1}"></a>
-															     </li>
+																<li class="page-item" th:each="pageNum : ${#numbers.sequence(0, students.totalPages-1)}"
+																    th:classappend="${pageNum == students.number} ? 'active'">
+																    <a class="page-link"
+																       th:href="@{/enrollments/enrollmentList(page=${pageNum},size=${students.size})}"
+																       th:text="${pageNum + 1}"></a>
+																</li>
 														
 														       
 														        <!-- Next -->
 														        <li class="page-item"  th:classappend="${students.last} ? 'disabled'">
-														            <a class="page-link" th:href="@{/enrollments/enrollmentList(page=${students.last ? 0 : students.number +1},size=${students.size})}">Next</a>
+														            <a class="page-link" th:href="@{/enrollments/enrollmentList(page=${students.number + 1},size=${students.size})}">Next</a>
 														        </li>
 														
 														    </ul>

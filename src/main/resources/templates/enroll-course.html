@@ -96,9 +96,9 @@
                                         <option value="" selected>Select a student</option>
 										<option th:each="student : ${studentList}"
 										        th:value="${student.id}"
-												th:data-name="${student.firstName + ' ' + student.LastName}"
+												th:data-name="${student.firstName + ' ' + student.lastName}"
 												th:data-email="${student.email}"
-												th:text="${student.firstName + ' ' + student.LastName + '('+ student.email + ')'}">
+												th:text="${student.firstName + ' ' + student.lastName + '('+ student.email + ')'}">
                                         </option>
 										
                                     </select>
@@ -234,6 +234,5 @@
 	 
 	 </script>
 	</body>
-</body>
 
 </html>

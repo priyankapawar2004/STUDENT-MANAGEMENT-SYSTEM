@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,6 +97,22 @@ public class EnrollmentController {
 		return"redirect:/enrollments/enrollmentList";
 		
 	}
+	
+	@GetMapping("/getStudentEnrollmentDetails/{id}")
+	public String getStudentEnrollmentDetails (@PathVariable Long id, Model model,
+			@RequestParam(defaultValue = "enrollments") String source) {
+		
+		EnrollmentSummaryDTO 	enrollmentSummaryDTO 
+		= enrollmentService.findEnrolledStudentCourseDetails(id);
+		
+		model.addAttribute("enrollmentSummaryDTO" , enrollmentSummaryDTO);
+		model.addAttribute("source" , source);
+		
+		
+		return "enrollment-details";
+		
+		
+	}
 		
 		
 		
@@ -103,22 +120,5 @@ public class EnrollmentController {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-			
-
+	
 }

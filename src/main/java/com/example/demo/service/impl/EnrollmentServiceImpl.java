@@ -131,10 +131,16 @@ public class EnrollmentServiceImpl implements  EnrollmentService{
 					         dto.setTotalFee(totalFee);
 					
 					         List<CourseDTO> courseList = student.getEnrollments().stream()
-					        		 .map(enrollment -> enrollment.getCourse().getFee())
+					        		 .map(enrollment -> enrollment.getCourse())
 					        		 .map(course -> mapper.map(course, CourseDTO.class))
 					        		 .collect(Collectors.toList());
 					         
+					         
+					         Log.info("Course list size: {}", courseList.size());
+
+					         for (CourseDTO course : courseList) {
+					             Log.info("Course: {} | Fee: {}", course.getCourseName(), course.getFee());
+					         }
 					         
 					         dto.setCourseList(courseList);
 				return dto;
@@ -142,18 +148,75 @@ public class EnrollmentServiceImpl implements  EnrollmentService{
 				})
 				.orElseThrow(() ->new RuntimeException("student not found"));
 	  }
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
 
+	  @Override
+	  public List<EnrollmentSummaryDTO> getRecentlyEnrolledStudents() {
+
+		  
+		  Log.info("list of recently enrolled students from" );
+			
+		  PageRequest pagerequest = PageRequest.of(0, 10, Sort.by(Direction.DESC, "id"));
+		  
+		  
+			return  studentRepository.findEnrolledStudents(pagerequest)
+			.map(student -> {
+				EnrollmentSummaryDTO dto = new EnrollmentSummaryDTO();
+				dto.setStudentId(student.getId());
+				dto.setStudentName(student.getFirstName() + " " +student.getLastName());
+				dto.setEmail(student.getEmail());
+				
+				dto.setCourseCount(student.getEnrollments().size());
+				BigDecimal totalFee = student.getEnrollments().stream()
+						.map(enrollment -> enrollment.getCourse().getFee())
+						.filter(fee -> fee != null)
+						.reduce(BigDecimal.ZERO, BigDecimal::add);
+				         dto.setTotalFee(totalFee);
+				
+			return dto;
+			})
+			.getContent();
+	  }
+	  
+	 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

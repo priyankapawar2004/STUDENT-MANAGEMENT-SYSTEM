@@ -48,7 +48,7 @@ public interface StudentRepository extends  JpaRepository <Students, Long>{
 Optional<Students> findEnrolledStudentCourseDetails(@Param("id") Long id);
 
 
-
+}
 
 
 
